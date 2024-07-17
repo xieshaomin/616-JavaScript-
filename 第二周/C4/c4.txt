@@ -1,0 +1,30 @@
+290 有一个问题，是否这个pattern串和比对的字符S串的token（就是在s串按空格分割后单词的长度）一样长，如果一样长的话，这个问题就很简单了。
+
+242 这是一个直方图的问题，可以通过将两个字符串转换成两个直方图做equals操作即可，是一个很好的方法，进阶可以通过s1-s2=0的方法这样就可以减少了存储空间，这样将问题转化为s1-s2=0的equals操作
+
+454 袁老师：注意二分问题，中间二分是一个直觉的，插值法的问题，何珊珊的方法给我门一个五五开的提示，注意平分
+	多使用数据结构可以用来简化问题
+	
+724 2*sum_left+nums[i] = total 的含义
+    注意讲课环节的分解，前缀和与后缀和，从而省了存储空间，如果数组有规律（等差、等比）还能达到节省空间的效果
+
+304 二维前缀和 分解为如何构建前缀和矩阵，带记忆的dp
+
+class NumMatrix {
+    constructor(matrix) {
+        const m = matrix.length, n = matrix[0].length;
+        let sum = Array.from({length: m + 1}, () => Array(n + 1).fill(0));
+        for (let i = 0; i < m; i++) {
+            for (let j = 0; j < n; j++) {
+                sum[i + 1][j + 1] = sum[i + 1][j] + sum[i][j + 1] - sum[i][j] + matrix[i][j];
+            }
+        }
+
+        // 返回左上角在 (r1,c1) 右下角在 (r2,c2) 的子矩阵元素和
+        this.sumRegion = function(r1, c1, r2, c2) {
+            return sum[r2 + 1][c2 + 1] - sum[r2 + 1][c1] - sum[r1][c2 + 1] + sum[r1][c1];
+        }
+    }
+}
+
+
